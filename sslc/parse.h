@@ -2,6 +2,7 @@
 #define _PARSE_H_
 
 #include <stdio.h>
+#include "platform.h"
 
 extern int	compilerErrorTotal;
 extern char compilerSyntaxError;

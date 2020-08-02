@@ -382,6 +382,7 @@
     <ClInclude Include="parse.h" />
     <ClInclude Include="parseext.h" />
     <ClInclude Include="parselib.h" />
+    <ClInclude Include="platform.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="sfalltok.h" />
     <ClInclude Include="system.H" />

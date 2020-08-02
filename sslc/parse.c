@@ -58,7 +58,7 @@ int expressionNesting = 0;
 static void freeVariableList(VariableList *v);
 static void freeVariable(Variable *v);
 static void parseWhile(Procedure *p, NodeList *n);
-static int writeBlock(NodeList *n, int i, FILE *f);
+int writeBlock(NodeList *n, int i, FILE *f);
 static int variable(VariableList *v, char **names, int type, ArrayVarList* arrays, int allowMulti);
 
 extern FILE* parseroutput;
@@ -312,7 +312,7 @@ char *getName(int offset, char *namelist) {
 */
 static int addName(char **namelist, char *name) {
 	unsigned short slen = strlen(name);
-	long tlen;
+	uint32_t tlen;
 	char *n = *namelist;
 	char *c;
 	int odd = 0;
@@ -325,13 +325,13 @@ static int addName(char **namelist, char *name) {
 
 	if (!n) {
 		n = (char*)malloc(4 + 2 + slen + 2);
-		*(long *)n = 2 + slen;
+		*(uint32_t *)n = 2 + slen;
 		c = n+4;
 	}
 	else {
 		int i;
 
-		tlen = *(long *)n;
+		tlen = *(uint32_t *)n;
 		i = findName(n, name);
 		if (i != -1)
 			return i;
@@ -343,7 +343,7 @@ static int addName(char **namelist, char *name) {
 		2 for ending length
 		*/
 		n = (char*)realloc(n, 4 + tlen + 2 + slen + 2);
-		*(long *)n = tlen + 2 + slen;
+		*(uint32_t *)n = tlen + 2 + slen;
 		c = n + 4 + tlen;
 	}
 	*(unsigned short *)c = slen;
@@ -356,7 +356,7 @@ static int addName(char **namelist, char *name) {
 
 static int addString(char **namelist, char *name) {
 	unsigned short slen = strlen(name);
-	long tlen;
+	uint32_t tlen;
 	char *n = *namelist;
 	char *c;
 	int odd = 0;
@@ -369,13 +369,13 @@ static int addString(char **namelist, char *name) {
 
 	if (!n) {
 		n = (char*)malloc(4 + 2 + slen + 2);
-		*(long *)n = 2 + slen;
+		*(uint32_t *)n = 2 + slen;
 		c = n+4;
 	}
 	else {
 		int i;
 
-		tlen = *(long *)n;
+		tlen = *(uint32_t *)n;
 		i = findString(n, name);
 		if (i != -1)
 			return i;
@@ -387,7 +387,7 @@ static int addString(char **namelist, char *name) {
 		2 for ending length
 		*/
 		n = (char*)realloc(n, 4 + tlen + 2 + slen + 2);
-		*(long *)n = tlen + 2 + slen;
+		*(uint32_t *)n = tlen + 2 + slen;
 		c = n + 4 + tlen;
 	}
 	*(unsigned short *)c = slen;

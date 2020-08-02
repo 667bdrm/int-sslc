@@ -2,6 +2,9 @@
 #define _LEX_H_
 
 #include "tokens.h"
+#if defined(__linux__)
+#include "linux.h"
+#endif
 
 typedef struct {
    int token; /* token we just parsed */

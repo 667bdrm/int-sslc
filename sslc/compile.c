@@ -1,11 +1,17 @@
 #define WIN32_LEAN_AND_MEAN
 #define _CRT_RAND_S
+#if defined(_WIN32)
 #include <Windows.h>
+#include <io.h>
+#endif
+#if defined(__linux__)
+#include "linux.h"
+#endif
 #include <stdio.h>
 #include <stdlib.h>
 #include "lex.h"
 #include "parse.h"
-#include <io.h>
+
 
 #ifdef BUILDING_DLL
 int optimize = 0;
@@ -22,17 +28,24 @@ int dumpTree = 0;
 int shortCircuit = 0;
 FILE *parseroutput;
 
+#if defined(_WIN32)
 #define FINDDATA _finddata_t
 #define FINDFIRST(x, y) _findfirst(x, y)
 #define FINDNEXT(x, y) _findnext(x, y)
 #define FINDCLOSE(x, y) _findclose(x)
 #define FINDHANDLE long
+
 //	#define BAD_HANDLE -1
 
 #if defined(_MSC_VER)
 #define FIND_SUCCESS(x)	((x) != -1)
 #else
 #define FIND_SUCCESS(x)	((x) == 0)
+#endif
+#endif
+
+#if defined(__linux__)
+int findpos = 0;
 #endif
 
 static void PrintLogo() {

@@ -2,6 +2,7 @@
 #define _PARSELIB_H_
 
 #include "tokens.h"
+#include "platform.h"
 
 enum {
 	C_TEXT_SHADOW = C_END_CORE,     // constants given to settextflags

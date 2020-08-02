@@ -39,7 +39,14 @@
 #include    "system.H"
 #include    "internal.H"
 
+#if defined(_WIN32)
 #include    "direct.h"
+#endif
+#if defined(__linux__)
+#include <unistd.h>
+#include "linux.h"
+#include <sys/stat.h>
+#endif
 #define getcwd( buf, size)  _getcwd( buf, size)
 #include    "sys/types.h"
 #include    "sys/stat.h"                        /* For stat()       */
